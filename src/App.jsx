@@ -7,6 +7,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [history, setHistory] = useState([])
+  const [loadingText, setLoadingText] = useState('Sniffing scripts...')
+  const [darkMode, setDarkMode] = useState(true)
 
   const analyze = async () => {
     if (!url) return
@@ -14,6 +16,20 @@ function App() {
     if (!/^https?:\/\//i.test(url)) cleanUrl = 'https://' + url
 
     setLoading(true)
+    setLoadingText('Sniffing scripts...')
+    const messages = [
+      'Sniffing scripts...',
+      'Scanning fingerprints...',
+      'Peeking at the HTML...',
+      'Checking JS variables...',
+      'Asking the AI...',
+      'Almost there...'
+    ]
+    let i = 0
+    const interval = setInterval(() => {
+      i++
+      if (i < messages.length) setLoadingText(messages[i])
+    }, 3000)
     setError(null)
     setResult(null)
 
@@ -30,6 +46,7 @@ function App() {
     } catch (err) {
       setError(err.message)
     } finally {
+      clearInterval(interval)
       setLoading(false)
     }
   }
@@ -37,8 +54,11 @@ function App() {
   const examples = ['https://www.rei.com', 'https://www.sephora.com', 'https://www.wayfair.com', 'https://www.psicompany.com']
 
   return (
-    <div className="app">
+    <div className={`app ${darkMode ? 'dark' : 'light'}`}>
       <div className="hero">
+        <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? '☀️ Light' : '🌙 Dark'}
+        </button>
         <h1>Search Provider Detector</h1>
         <p>Find out which search technology any ecommerce website is using</p>
       </div>
@@ -70,7 +90,7 @@ function App() {
       {loading && (
         <div className="loading">
           <div className="spinner" />
-          <p>Fetching and analyzing {url}...</p>
+          <p>{loadingText}</p>
         </div>
       )}
 
@@ -135,6 +155,7 @@ function App() {
           ))}
         </div>
       )}
+      
     </div>
   )
 }

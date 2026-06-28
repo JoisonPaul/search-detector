@@ -26,6 +26,12 @@ export default async function handler(req, res) {
     }
     html = await response.text();
   } catch (err) {
+    if (err.name === 'AbortError' || err.message.includes('aborted')) {
+      return res.status(400).json({ error: 'This website took too long to respond. It may have bot protection or be temporarily down.' });
+    }
+    if (err.message.includes('ScrapingBee')) {
+      return res.status(400).json({ error: 'Could not access this website. It may be protected against automated access.' });
+    }
     return res.status(400).json({ error: 'Could not fetch the website: ' + err.message });
   }
 
@@ -78,7 +84,24 @@ export default async function handler(req, res) {
       /searchanise/i, /cdn\.searchanise\.io/i
     ],
     'Boost Commerce': [
-      /boost-sd__/i, /boostcommerce/i
+      /boost-sd__/i, /boostcommerce/i,
+      /boost-pfs/i, /boostcommerce\.com/i,
+      /boost-pfs-filter/i
+    ],
+    'Doofinder': [
+      /doofinder/i, /cdn\.doofinder\.com/i,
+      /window\.doofinder/i, /doofinderLayer/i,
+      /\.df-search/i
+    ],
+    'Searchanise': [
+      /searchanise/i, /cdn\.searchanise\.io/i,
+      /window\.Searchanise/i, /snize/i,
+      /searchanise\.com/i
+    ],
+    'Klevu': [
+      /klevu/i, /js\.klevu\.com/i,
+      /window\.klevu_settings/i, /klevu-pt-rs/i,
+      /klevu\.com/i, /klevusearch/i
     ],
     'Fast Simon': [
       /fastsimon/i, /fast\.a\.cloudflarestorage/i, /window\.FastSimon/i
