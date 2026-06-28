@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   try {
     const scrapingBeeUrl = `https://app.scrapingbee.com/api/v1/?api_key=${process.env.SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=true&premium_proxy=false&block_resources=false`
     const response = await fetch(scrapingBeeUrl, {
-      signal: AbortSignal.timeout(60000),
+    signal: AbortSignal.timeout(20000),
     });
     if (!response.ok) {
       const errText = await response.text();
