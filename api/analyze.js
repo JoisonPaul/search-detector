@@ -13,12 +13,17 @@ export default async function handler(req, res) {
 
   let html = '';
 
-  // Step 1 — Fetch the website HTML
+  
+// Step 1 — Fetch the website HTML via ScrapingBee
   try {
-    const response = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SearchDetector/1.0)' },
-      signal: AbortSignal.timeout(10000),
+    const scrapingBeeUrl = `https://app.scrapingbee.com/api/v1/?api_key=${process.env.SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=true&premium_proxy=false&block_resources=false`
+    const response = await fetch(scrapingBeeUrl, {
+      signal: AbortSignal.timeout(60000),
     });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`ScrapingBee error: ${response.status} - ${errText.slice(0, 200)}`);
+    }
     html = await response.text();
   } catch (err) {
     return res.status(400).json({ error: 'Could not fetch the website: ' + err.message });
@@ -140,7 +145,7 @@ If unknown set found:false, provider:"Unknown", confidence:0.`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.1, maxOutputTokens: 500 }
+          generationConfig: { temperature: 0.1, maxOutputTokens: 2048 }
         })
       }
     );
