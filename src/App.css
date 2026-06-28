@@ -370,6 +370,9 @@ body {
 }
 /* Theme Toggle */
 .theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
   background: transparent;
   border: 1px solid #2a2d3a;
   color: #888;
@@ -377,8 +380,8 @@ body {
   border-radius: 99px;
   font-size: 13px;
   cursor: pointer;
-  margin-bottom: 1.5rem;
   transition: all 0.2s;
+  z-index: 100;
 }
 
 .theme-toggle:hover {

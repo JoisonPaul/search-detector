@@ -43,11 +43,12 @@ export default async function handler(req, res) {
       /window\.algolia/i, /\.ais-/i
     ],
     'ExpertRec': [
-    /expertrec/i, /cdn\.expertrec\.com/i,
-    /window\.ExpertRec/i, /er_srch/i, /ercustomsearch/i,
-    /psicompany-expert-rec/i, /expert.rec/i,
-    /expertrec\.com/i, /csearch\.expertrec/i
-    ],  
+  /expertrec/i, /cdn\.expertrec\.com/i,
+  /window\.ExpertRec/i, /er_srch/i, /ercustomsearch/i,
+  /expertrec\.com/i, /csearch\.expertrec/i,
+  /ci_common\.js/i, /ci_customSearch/i,
+  /customsearch\.expertrec/i, /cse\.expertrec/i
+], 
     'Klevu': [
       /klevu/i, /js\.klevu\.com/i,
       /window\.klevu_settings/i, /klevu-pt-rs/i
