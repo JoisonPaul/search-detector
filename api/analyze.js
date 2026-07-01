@@ -161,7 +161,7 @@ Respond ONLY in this exact JSON format, no markdown, no backticks:
 {"provider":"Name","confidence":70,"found":true,"category":"Enterprise SaaS","description":"1-2 sentences about why this site uses this provider.","signals":["signal 1","signal 2"],"note":"How this was determined","website":"https://provider.com"}
 
 If unknown set found:false, provider:"Unknown", confidence:0.`;
-    console.log('Gemini API key exists:', !!process.env.GEMINI_API_KEY)
+    
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
@@ -183,7 +183,7 @@ If unknown set found:false, provider:"Unknown", confidence:0.`;
     const result = JSON.parse(match[0]);
 
   } catch (err) {
-    console.error('Gemini error:', err.message)
+    
     return res.status(200).json({
       provider: 'Unknown',
       confidence: 0,

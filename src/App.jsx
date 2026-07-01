@@ -51,7 +51,7 @@ function App() {
     }
   }
 
-  const examples = ['https://www.rei.com', 'https://www.sephora.com', 'https://www.wayfair.com', 'https://www.psicompany.com']
+  const examples = ['https://www.sephora.com', 'https://www.gymshark.com', 'https://www.huckberry.com', 'https://www.psicompany.com']
 
   return (
     <div className={`app ${darkMode ? 'dark' : 'light'}`}>
